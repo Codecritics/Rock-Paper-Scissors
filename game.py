@@ -1,20 +1,35 @@
+import random
+
+
 def get_user_option():
+    possibilities = ("scissors", "paper", "rock")
     while True:
-        option = input()
-        if option in ("scissors", "paper", "rock"):
+        user_option = input()
+        if user_option in possibilities:
+            computer_option = random.choice(possibilities)
             break
-    return option
+    return user_option, computer_option
 
 
-def find_option_wins_over(option):
+def outcome(user_option, computer_option):
     condition_map = dict(scissors="rock", rock="paper", paper="scissors")
-    return condition_map[option]
+    if user_option == computer_option:
+        return "draw"
+    elif computer_option == condition_map[user_option]:
+        return "lost"
+    elif condition_map[computer_option] == user_option:
+        return "win"
 
 
 def main():
-    user_option = get_user_option()
-    winning_user_option = find_option_wins_over(user_option)
-    print("Sorry, but the computer chose", winning_user_option)
+    user_choice, computer_choice = get_user_option()
+    battle_outcome = outcome(user_choice, computer_choice)
+    if battle_outcome == "win":
+        print(f"Well done. The computer chose {computer_choice} and failed")
+    elif battle_outcome == "lost":
+        print(f"Sorry, but the computer chose {computer_choice}")
+    elif battle_outcome == "draw":
+        print(f"There is a draw ({user_choice})")
 
 
 if __name__ == "__main__":
